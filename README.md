@@ -7,20 +7,25 @@ The Taxonomies service gives a list of the taxonomies in the Species database.
 
     GET /api/taxonomies?format=json
 
-## Taxa
+## Taxa, lookup
 The Taxa services give access to the species database.
 
-    GET /taxonomies/<taxonomy_id>/taxa
+    GET /api/taxonomies/<taxonomy_id>/taxa
 
 Retrieves taxa from a specific taxonomy in json format.
 
 Called with no extra parameters, this service returns the taxa with rank "kingdom".
-Optional parameters
 
-from
-    Return a subset of the taxa, start at 'from', default = 0
-size
-    Return 'size' number of taxa, default = 10
+### Optional parameters
+
+| Parameter  | Description |
+| ------------- | ------------- |
+| from  | Return a subset of the taxa, start at 'from', default = 0  |
+| size | Return 'size' number of taxa, default = 10  |
+| parent_id | Return taxa that are immediate children of another taxa. If omitted, return taxa on the highest level (the kingdoms: animalia, plantae and fungi) |
+
+
+
 parent_id
     Return taxa that are immediate children of another taxa. If omitted, return taxa on the highest level (the kingdoms: animalia, plantae and fungi)
 fields
