@@ -17,6 +17,7 @@ The token can then be used to invoke further services, for example list availabl
     -H 'X-User-Email: bjorn@biocaching.com' -H 'X-User-Token: zCC868dPzS2Gp1y-UE1M' \
     -X GET "http://api.biocaching.com:82/api/taxonomies" 
 
+Also see the example programs provided.
 
 ##Taxonomies
 The Taxonomies service gives a list of the taxonomies in the Species database.

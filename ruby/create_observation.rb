@@ -8,29 +8,33 @@
 
 require 'rest-client'
 require 'pp'
-params = {observation: {taxon_id: 7552, observed_at: Time.now.to_s, latitude: 60.123, longitude: 12.234, picture: File.new("flaggermus.jpg", 'rb')}, :multipart => true, :content_type => 'application/json'}
+
+
+load './params.rb'
+
+
+observation_params = {observation: {taxon_id: 7552, observed_at: Time.now.to_s, latitude: 60.123, longitude: 12.234, picture: File.new("gekko.jpg", 'rb')}, :multipart => true, :content_type => 'application/json'}
 
 begin
   
-  response = RestClient.post 'http://localhost:3000/api/observations', params
-  puts response.code
-rescue RestClient::Unauthorized => e
-  puts "unauthorized, will add username and password and try to again..."
-  params = params.merge(user:{email:"bjorn@biocaching.com", password:"test1234"})
-  response = RestClient.post 'http://localhost:3000/api/observations', params
-  puts response.code
+  params = {user:{email:@username, password:@password}}
+  response = RestClient.post("http://#{@server}/users/sign_in.json", params)
+  token = JSON.parse(response)["authentication_token"]
   
+  puts JSON.parse(response)
+  
+  @http_headers.merge!({'X-User-Email' => @username, 'X-User-Token' => token})
+  
+  response = RestClient.post "#{@server}/api/observations", observation_params, @http_headers
+  
+  puts response.code
+  json = JSON.parse(response)
+  puts JSON.pretty_generate(json)
+rescue RestClient::Unauthorized => e
+  puts "unauthorized...."  
   exit
 rescue  Exception => e
   puts e.message
   puts e.class.name
   exit
 end
-#
-json = JSON.parse(response)
-#
-puts JSON.pretty_generate(json)
-
-puts response.code
-pp response.cookies
-pp response.headers
