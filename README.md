@@ -1,11 +1,27 @@
 #REST-API for Biocaching
 
-This page documents the Biocaching REST-based APIs.
+This page documents the Biocaching REST-based APIs. To access Biocaching through the API you also need a username and a password. If you have that, you can invoke the API with curl on the command line: 
+
+    curl  -H 'Content-Type: application/json' -H 'Accept: application/json' \
+      -X POST "http://api.biocaching.com:82/users/sign_in" \
+      -d '{"user" : { "email" : "bjorn@biocaching.com", "password" : "<PASSWORD>"}}' \
+
+If successful, the command will return something like this: 
+
+    {"id":1,"email":"bjorn@biocaching.com","created_at":"2016-02-16T12:36:44.000Z",
+    "updated_at":"2016-02-17T13:22:08.320Z","authentication_token":"zCC868dPzS2Gp1y-UE1M"}
+
+The token can then be used to invoke further services, for example list available taxonomies: 
+
+    curl  -H 'Content-Type: application/json' -H 'Accept: application/json' \
+    -H 'X-User-Email: bjorn@biocaching.com' -H 'X-User-Token: zCC868dPzS2Gp1y-UE1M' \
+    -X GET "http://api.biocaching.com:82/api/taxonomies" 
+
 
 ##Taxonomies
 The Taxonomies service gives a list of the taxonomies in the Species database.
 
-    GET /api/taxonomies?format=json
+    GET /api/taxonomies
 
 ## Taxa, lookup
 The Taxa services give access to the species database.
@@ -110,4 +126,4 @@ Get observations:
 Ikke lagd:
 GET /taxa/<id>?format=json
 
-Retrieves a single species, given it's id.@
+Retrieves a single species, given it's id.
