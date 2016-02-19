@@ -133,17 +133,17 @@ Creates an observation with date/time, location, a taxon and a picture.
 
 ### Parameters
 
-   | Parameter | Description |
-   | ------------- | ------------- |
-   | taxon_id | The id of the taxon observed, as returned by the taxa-servies |
-   | observed_at | Date and time in ISO 8601 format, e g "2016-02-19 13:50:58 +0100" |
-   | latitude | The latitude of the location |
-   | longitude | The longitude of the location |
-   | comments | A free text comment |
-   | picture[content_type] | Content type of the picture, e g "image/jpg" |
-   | picture[headers] |  |
-   | picture[original_filename] |  |
-   | picture[tempfile] |  |
+| Parameter | Description |
+| ------------- | ------------- |
+| taxon_id | The id of the taxon observed, as returned by the taxa-servies |
+| observed_at | Date and time in ISO 8601 format, e g "2016-02-19 13:50:58 +0100" |
+| latitude | The latitude of the location |
+| longitude | The longitude of the location |
+| comments | A free text comment |
+| picture[content_type] | Content type of the picture, e g "image/jpg" |
+| picture[headers] |  |
+| picture[original_filename] |  |
+| picture[tempfile] |  |
 
 The parameters must be supplied as the content of the HTTP POST in a JSON hash with key "observation". 
 See example programs for details (create_observation.rb)   
