@@ -18,6 +18,7 @@ The token can then be used to invoke further services, for example list availabl
     -X GET "http://api.biocaching.com:82/api/taxonomies" 
 
 Also see the example programs provided.
+All requests must use Content-Type application/json and must accept a response in the same content type. 
 
 ##Taxonomies
 The Taxonomies service gives a list of the taxonomies in the Species database.
@@ -104,25 +105,48 @@ Search for birds named something with "fody", return at most 10 results:
 
 Retrieve observations
 
-   GET /api/observations.json?all=true
+   GET /api/observations.json
 
 Get a listing of observations
-Optional parameters
 
 ### Optional parameters
 
 | Parameter  | Description |
 | ------------- | ------------- |
 | all  | Get observations regardless of user. Without this only the authenticated user's observations are returned.  |
+| latitude  | Latitude |
+| longitude  | Longitude |
+| distance  | Get observations from within distance from the location given by the latitude and longitude coordinates. See this for allowed formats: https://www.elastic.co/guide/en/elasticsearch/reference/1.4/common-options.html#distance-units  |
 
 
 ### Examples
 
-Get observations:
+Get all observations with 20km from a location:
     
-    GET /api/observations.json?all=true
+    GET /api/observations.json?all=true&latitude=61&longitude=12.4&distance=20km
 
+## Create an observation
 
+  POST /api/observations
+  
+Creates an observation with date/time, location, a taxon and a picture. 
+
+### Parameters
+
+   | Parameter | Description |
+   | ------------- | ------------- |
+   | taxon_id | The id of the taxon observed, as returned by the taxa-servies |
+   | observed_at | Date and time in ISO 8601 format, e g "2016-02-19 13:50:58 +0100" |
+   | latitude | The latitude of the location |
+   | longitude | The longitude of the location |
+   | comments | A free text comment |
+   | picture[content_type] | Content type of the picture, e g "image/jpg" |
+   | picture[headers] |  |
+   | picture[original_filename] |  |
+   | picture[tempfile] |  |
+
+The parameters must be supplied as the content of the HTTP POST in a JSON hash with key "observation". 
+See example programs for details (create_observation.rb)   
 
 Ikke lagd:
 GET /taxa/<id>?format=json
