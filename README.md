@@ -95,7 +95,7 @@ Search, by name, for taxa in a specific taxonomy.
 | below_rank, below_rank_value | return only taxa below a certain rank in the taxonomy.|
 | fields | If omitted, only a subsets of the available fields are included in the response. Pass value "all" to have all available fields returned |
 | region | Only return taxa that are found in a specific region. For now, only region "nor" is available |
-| language | Only return taxa that have common names in the specified language (ISO 639-2), default is "eng" |
+| languages | Only return taxa that have common names in one of the specified languages (ISO 639-2), default is "eng" |
 
 
 ### Examples
@@ -108,9 +108,9 @@ Get the 5 next species in the mammalia class (mammals):
 
     GET /api/taxonomies/1/taxa/search?below_rank=class&below_rank_value=mammalia&size=5&from=5
 
-Search for birds named something with "fody", return at most 10 results:
+Search for birds named something with "meis" in Norwegian bokmål or nynorsk, return at most 10 results:
 
-    GET /api/taxonomies/1/taxa/search?below_rank=class&below_rank_value=aves&size=10&term=fody
+    GET /api/taxonomies/1/taxa/search?below_rank=class&below_rank_value=aves&size=10&term=meis&languages=nob,nno
 
 ## Observations
 
