@@ -61,6 +61,16 @@ Get all taxa in the chordata phylum:
     GET /api/taxonomies/1/taxa?parent_id=11&size=40
 
 
+    GET /api/taxonomies/<taxonomy_id>/taxa/<taxa_id>
+
+Retrieves one specific taxa.
+
+### Optional parameters
+
+| Parameter  | Description |
+| ------------- | ------------- |
+| fields | If omitted, only a subsets of the available fields are included in the response. Pass value "all" to have all available fields returned |
+
 ## Taxa, search
 Search for taxa
 
