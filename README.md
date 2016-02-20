@@ -25,7 +25,7 @@ The Taxonomies service gives a list of the taxonomies in the Species database.
 
     GET /api/taxonomies
 
-## Taxa, lookup
+## Retreieve a subset of taxa
 The Taxa services give access to the species database.
 
     GET /api/taxonomies/<taxonomy_id>/taxa
@@ -60,6 +60,7 @@ Get all taxa in the chordata phylum:
 
     GET /api/taxonomies/1/taxa?parent_id=11&size=40
 
+## Retrieve a single taxon
 
     GET /api/taxonomies/<taxonomy_id>/taxa/<taxa_id>
 
@@ -71,7 +72,7 @@ Retrieves one specific taxa.
 | ------------- | ------------- |
 | fields | If omitted, only a subsets of the available fields are included in the response. Pass value "all" to have all available fields returned |
 
-## Taxa, search
+## Search for taxa
 Search for taxa
 
     GET /api/taxonomies/<taxonomy_id>/taxa/search?term=<search_term>
