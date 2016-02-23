@@ -1,8 +1,8 @@
 puts
 if ARGV.size < 3
   puts "usage:"
-  puts "  ruby list_observations.rb <APIHOST> <username> <password>"
-  puts "  for example: ruby list_observations.rb api.biocaching.com:82 bjorn@biocaching.com my_password123"
+  puts "  ruby <script>.rb <APIHOST> <username> <password>"
+  puts "  for example: ruby list_observations.rb api.biocaching.com:82 bjorn@biocaching.com password"
   puts 
   exit 1
 else
