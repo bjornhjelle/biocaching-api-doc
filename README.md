@@ -26,7 +26,7 @@ The Taxonomies service gives a list of the taxonomies in the Species database.
 
     GET /api/taxonomies
 
-## Retreieve a subset of taxa
+## Retrieve a subset of taxa
 The Taxa services give access to the species database.
 
     GET /api/taxonomies/<taxonomy_id>/taxa
@@ -43,7 +43,7 @@ Called with no extra parameters, this service returns the taxa with rank "kingdo
 | size | Return 'size' number of taxa, default = 10  |
 | parent_id | Return taxa that are immediate children of another taxa. If omitted, return taxa on the highest level (the kingdoms: animalia, plantae and fungi) |
 | fields | If omitted, only a subsets of the available fields are included in the response. Pass value "all" to have all available fields returned |
-| region | Only return taxa that are found in a specific region. E.g. ®ion=nor |
+| region | Only return taxa that are found in a specific region. E.g. region=nor |
 |  |  |
 
 
