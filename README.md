@@ -125,7 +125,9 @@ Get a listing of observations
 
 | Parameter  | Description |
 | ------------- | ------------- |
-| all  | Get observations regardless of user. Without this only the authenticated user's observations are returned.  |
+| user_id  | Get observations that has been reported by a user. Without this, all observations are returned.  |
+| from  | Return a subset of the observations, start at 'from', default = 0  |
+| size | Return 'size' number of observations, default = 10  |
 | latitude  | Latitude |
 | longitude  | Longitude |
 | distance  | Get observations from within distance from the location given by the latitude and longitude coordinates. See this for allowed formats: https://www.elastic.co/guide/en/elasticsearch/reference/1.4/common-options.html#distance-units  |
