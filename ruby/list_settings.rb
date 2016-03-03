@@ -17,7 +17,7 @@ begin
   puts JSON.parse(response)
   search_params= "latitude=60&longitude=11&distance=2000km&size=5&from=0&"
   @http_headers.merge!({'X-User-Email' => @username, 'X-User-Token' => token})
-  response = RestClient.get "http://#{@server}/api/observations?all=true&#{search_params}", @http_headers
+  response = RestClient.get "http://#{@server}/api/settings", @http_headers
   
   puts response.code
   json = JSON.parse(response)
