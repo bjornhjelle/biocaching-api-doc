@@ -25,7 +25,7 @@ begin
   
   @http_headers.merge!({'X-User-Email' => @username, 'X-User-Token' => token})
   
-  response = RestClient.put "#{@server}/api/settings", put_params, @http_headers
+  response = RestClient.put "#{@server}/settings", put_params, @http_headers
   
   puts response.code
   json = JSON.parse(response)

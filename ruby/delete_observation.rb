@@ -19,7 +19,7 @@ begin
   
   @http_headers.merge!({'X-User-Email' => @username, 'X-User-Token' => token})
   
-  response = RestClient.delete "#{@server}/api/observations/7", @http_headers
+  response = RestClient.delete "#{@server}/observations/4", @http_headers
   
   puts response.code
   json = JSON.parse(response)

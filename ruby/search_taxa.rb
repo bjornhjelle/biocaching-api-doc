@@ -17,17 +17,17 @@ begin
 
   @http_headers.merge!({'X-User-Email' => @username, 'X-User-Token' => token})
 
-  response = RestClient.get "http://#{@server}/api/taxonomies/1/taxa/search.json?term=rev&languages=nno", @http_headers
+  response = RestClient.get "http://#{@server}/taxa/search.json?term=rev&languages=nno", @http_headers
 
   puts response.code
   json = JSON.parse(response)
   puts JSON.pretty_generate(json)
 
-  puts "Total number of hits: %i" % json["total"]
-  puts "Number of hits returned: %i" % json["number_of_hits"]
+  #puts "Total number of hits: %i" % json["total"]
+  #puts "Number of hits returned: %i" % json["number_of_hits"]
 
-  for hit in json["hits"] do 
-    pp hit
+  #for hit in json["hits"] do 
+    #pp hit
     # common_names = hit["_source"]["names"]["eng"]
     # scientific_name = hit["_source"]["scientific_name"]
     # common_name_highlight = hit["highlight"]["names.eng"].nil? ? "" : hit["highlight"]["names.eng"].first
@@ -37,7 +37,7 @@ begin
     # else
     #   puts "%s (%s) highlight: %s, %s" % [common_names[0], scientific_name, common_name_highlight, scientfic_name_highlight]
     # end 
-  end
+    #end
   
   
 rescue RestClient::Unauthorized => e

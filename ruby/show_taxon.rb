@@ -18,7 +18,7 @@ begin
   #parameters= "fields=all"
   parameters= ""
   @http_headers.merge!({'X-User-Email' => @username, 'X-User-Token' => token})
-  response = RestClient.get "http://#{@server}/api/taxonomies/1/taxa/452?#{parameters}", @http_headers
+  response = RestClient.get "http://#{@server}/taxa/452?#{parameters}", @http_headers
   
   puts response.code
   json = JSON.parse(response)
