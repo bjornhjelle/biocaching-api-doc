@@ -11,4 +11,5 @@ else
   @password = ARGV[2]
 end  
 
-@http_headers = {content_type: :json, accept: :json}
+#@http_headers = {content_type: :json, accept: :json}
+@http_headers = {accept: :json}
