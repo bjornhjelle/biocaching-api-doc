@@ -15,10 +15,10 @@ begin
   token = JSON.parse(response)["authentication_token"]
   
   puts JSON.parse(response)
-  parameters= "fields=all"
+  parameters= "parent_id=475"
   #parameters= ""
   @http_headers.merge!({'X-User-Email' => @username, 'X-User-Token' => token})
-  response = RestClient.get "http://#{@server}/taxa/475?#{parameters}", @http_headers
+  response = RestClient.get "http://#{@server}/taxa?#{parameters}", @http_headers
   
   puts response.code
   json = JSON.parse(response)
