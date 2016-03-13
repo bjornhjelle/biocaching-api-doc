@@ -25,7 +25,7 @@ begin
   
   @http_headers.merge!({'X-User-Email' => @username, 'X-User-Token' => token})
   
-  response = RestClient.post "#{@server}/observations", observation_params, @http_headers
+  response = RestClient.post "http://#{@server}/api/observations", observation_params, @http_headers
   
   puts response.code
   json = JSON.parse(response)
