@@ -169,4 +169,4 @@ Updates an observation. The parameters are the same as for the create service.
 
 ## Delete an observation
 
-  DELETE /observations/<observation_id> 
+  DELETE /observations/\<observation_id\> 
