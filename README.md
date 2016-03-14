@@ -4,17 +4,17 @@ This page documents the Biocaching REST-based APIs. To access Biocaching through
 
     curl  -H 'Content-Type: application/json' -H 'Accept: application/json' \
       -X POST "http://api.biocaching.com:82/users/sign_in" \
-      -d '{"user" : { "email" : "bjorn@biocaching.com", "password" : "<PASSWORD>"}}' \
+      -d '{"user" : { "email" : "<EMAILADDRESS>", "password" : "<PASSWORD>"}}' \
 
 If successful, the command will return something like this: 
 
-    {"id":1,"email":"bjorn@biocaching.com","created_at":"2016-02-16T12:36:44.000Z",
+    {"id":1,"email":"<EMAILADDRESS>","created_at":"2016-02-16T12:36:44.000Z",
     "updated_at":"2016-02-17T13:22:08.320Z","authentication_token":"zCC868dPzS2Gp1y-UE1M"}
 
 The token can then be used to invoke further services, for example list available taxonomies: 
 
     curl  -H 'Content-Type: application/json' -H 'Accept: application/json' \
-    -H 'X-User-Email: bjorn@biocaching.com' -H 'X-User-Token: zCC868dPzS2Gp1y-UE1M' \
+    -H 'X-User-Email: <EMAILADDRESS>' -H 'X-User-Token: zCC868dPzS2Gp1y-UE1M' \
     -X GET "http://api.biocaching.com:82/api/taxonomies" 
 
 Also see the example programs provided.
@@ -60,7 +60,7 @@ Get all taxa in the chordata phylum:
 
 ## Retrieve a single taxon
 
-    GET /taxa/<taxa_id>
+    GET /taxa/\<taxa_id\>
 
 Retrieves one specific taxa.
 
@@ -73,7 +73,7 @@ Retrieves one specific taxa.
 ## Search for taxa
 Search for taxa
 
-    GET /taxa/search?term=<search_term>
+    GET /taxa/search?term=\<search_term\>
 
 Search, by name, for taxa in a specific taxonomy.
 
@@ -163,7 +163,7 @@ See example programs for details (create_observation.rb and CreateObservationWit
 
 ## Update an observation
 
-  PUT /observations/<observation_id_>
+  PUT /observations/\<observation_id\>
   
 Updates an observation. The parameters are the same as for the create service.
 
