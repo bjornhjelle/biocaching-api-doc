@@ -159,13 +159,13 @@ Creates an observation with date/time, location, a taxon and a picture.
 | picture[tempfile] |  |
 
 The parameters must be supplied as the content of the HTTP POST in a JSON hash with key "observation". 
-See example programs for details (create_observation.rb)   
+See example programs for details (create_observation.rb and CreateObservationWithPicture.java)   
 
 ## Update an observation
 
   PUT /observations/<observation_id_>
   
-Updates an observation. The parameters are the same as the create service.
+Updates an observation. The parameters are the same as for the create service.
 
 ## Delete an observation
 
