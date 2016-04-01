@@ -13,7 +13,7 @@ require 'pp'
 load './params.rb'
 
 
-observation_params = {observation: {taxon_id: 80274, comments: "Observert i hagen min", observed_at: Time.now.to_s, latitude: 58.123, longitude: 11, picture: File.new("../pictures/blåmeis.jpg", 'rb')}, :multipart => true, :content_type => 'application/json'}
+observation_params = {observation: {taxon_id: 7552, observed_at: Time.now.to_s, latitude: 65.123, longitude: 14.234, picture: File.new("gekko.jpg", 'rb')}, :multipart => true, :content_type => 'application/json'}
 
 begin
   
