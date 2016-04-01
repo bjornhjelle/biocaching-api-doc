@@ -75,7 +75,7 @@ Search for taxa
 
     GET /taxa/search?term=\<search_term\>
 
-Search, by name, for taxa in a specific taxonomy.
+Search for taxa by name (common name or scientific name).
 
 
 ### Parameters
