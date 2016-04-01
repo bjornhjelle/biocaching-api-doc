@@ -3,19 +3,19 @@
 This page documents the Biocaching REST-based APIs. To access Biocaching through the API you also need a username and a password. If you have that, you can invoke the API with curl on the command line: 
 
     curl  -H 'Content-Type: application/json' -H 'Accept: application/json' \
-      -X POST "http://api.biocaching.com:82/users/sign_in" \
-      -d '{"user" : { "email" : "bjorn@biocaching.com", "password" : "<PASSWORD>"}}' \
+      -X POST "http://api.uio..biocaching.com/users/sign_in" \
+      -d '{"user" : { "email" : "<EMAILADDRESS>", "password" : "<PASSWORD>"}}' \
 
 If successful, the command will return something like this: 
 
-    {"id":1,"email":"bjorn@biocaching.com","created_at":"2016-02-16T12:36:44.000Z",
+    {"id":1,"email":"<EMAILADDRESS>","created_at":"2016-02-16T12:36:44.000Z",
     "updated_at":"2016-02-17T13:22:08.320Z","authentication_token":"zCC868dPzS2Gp1y-UE1M"}
 
-The token can then be used to invoke further services, for example list available taxonomies: 
+The token can then be used to invoke further services, for example retrieve a taxon: 
 
     curl  -H 'Content-Type: application/json' -H 'Accept: application/json' \
-    -H 'X-User-Email: bjorn@biocaching.com' -H 'X-User-Token: zCC868dPzS2Gp1y-UE1M' \
-    -X GET "http://api.biocaching.com:82/api/taxonomies" 
+    -H 'X-User-Email: <EMAILADDRESS>' -H 'X-User-Token: zCC868dPzS2Gp1y-UE1M' \
+    -X GET "http://api.uio.biocaching.com/taxa/475?fields=all" 
 
 Also see the example programs provided.
 All requests must use Content-Type application/json and must accept a response in the same content type. 
@@ -41,8 +41,7 @@ Called with no extra parameters, this service returns the taxa with rank "kingdo
 | size | Return 'size' number of taxa, default = 10  |
 | parent_id | Return taxa that are immediate children of another taxa. If omitted, return taxa on the highest level (the kingdoms: animalia, plantae and fungi) |
 | fields | If omitted, only a subsets of the available fields are included in the response. Pass value "all" to have all available fields returned |
-| region | Only return taxa that are found in a specific region. E.g. region=nor |
-|  |  |
+
 
 
 ### Examples
@@ -61,7 +60,7 @@ Get all taxa in the chordata phylum:
 
 ## Retrieve a single taxon
 
-    GET /taxa/<taxa_id>
+    GET /taxa/\<taxa_id\>
 
 Retrieves one specific taxa.
 
@@ -74,9 +73,9 @@ Retrieves one specific taxa.
 ## Search for taxa
 Search for taxa
 
-    GET /taxa/search?term=<search_term>
+    GET /taxa/search?term=\<search_term\>
 
-Search, by name, for taxa in a specific taxonomy.
+Search for taxa by name (common name or scientific name).
 
 
 ### Parameters
@@ -160,14 +159,14 @@ Creates an observation with date/time, location, a taxon and a picture.
 | picture[tempfile] |  |
 
 The parameters must be supplied as the content of the HTTP POST in a JSON hash with key "observation". 
-See example programs for details (create_observation.rb)   
+See example programs for details (create_observation.rb and CreateObservationWithPicture.java)   
 
 ## Update an observation
 
-  PUT /observations/<observation_id_>
+  PUT /observations/\<observation_id\>
   
-Updates an observation. The parameters are the same as the create service.
+Updates an observation. The parameters are the same as for the create service.
 
 ## Delete an observation
 
-  DELETE /observations/<observation_id> 
+  DELETE /observations/\<observation_id\> 
