@@ -17,8 +17,9 @@ observation_params = {observation: {taxon_id: 80274, comments: "Observert i hage
 
 begin
   
+  pp @http_headers
   params = {user:{email:@username, password:@password}}
-  response = RestClient.post("http://#{@server}/users/sign_in.json", params)
+  response = RestClient.post("http://#{@server}/users/sign_in.json", params, @http_headers)
   token = JSON.parse(response)["authentication_token"]
   
   puts JSON.parse(response)
