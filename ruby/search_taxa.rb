@@ -10,14 +10,14 @@ require 'pp'
 
 begin
   params = {user:{email:@username, password:@password}}
-  response = RestClient.post("http://#{@server}/users/sign_in.json", params)
+  response = RestClient.post("http://#{@server}/users/sign_in.json", params, @http_headers)
   token = JSON.parse(response)["authentication_token"]
   
   puts JSON.parse(response)
 
   @http_headers.merge!({'X-User-Email' => @username, 'X-User-Token' => token})
 
-  response = RestClient.get "http://#{@server}/taxa/search.json?term=spettmeis&fields=all", @http_headers
+  response = RestClient.get "http://#{@server}/taxa/search.json?term=stein&collection_id=24&size=0", @http_headers
 
   puts response.code
   json = JSON.parse(response)
