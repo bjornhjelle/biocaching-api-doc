@@ -24,19 +24,34 @@ begin
   puts JSON.parse(response)
   
   @http_headers.merge!({'X-User-Email' => @username, 'X-User-Token' => token})
-  
-  response = RestClient.post "http://#{@server}/observations", observation_params, @http_headers
+  response = RestClient.get "http://#{@server}/observations?size=1", @http_headers
+
+  puts response.code
+  json = JSON.parse(response)
+  o_id = json["hits"][0]["_id"]
+   
+  response = RestClient.post "http://#{@server}/observations/#{o_id}/unlike", nil, @http_headers
   
   puts response.code
   json = JSON.parse(response)
   puts JSON.pretty_generate(json)
+  
+  response = RestClient.get "http://#{@server}/observations/#{o_id}/likes",  @http_headers
+  
+  puts response.code
+  json = JSON.parse(response)
+  puts JSON.pretty_generate(json)
+  
+  
+  
 rescue RestClient::Unauthorized => e
   puts "unauthorized...."  
   exit
 rescue  Exception => e
 
   puts e.message
-  puts e.response.code
-  pp e.response
+  puts e.response if e.respond_to? response
+
+  puts e.backtrace
   exit
 end

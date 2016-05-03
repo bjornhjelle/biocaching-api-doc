@@ -12,4 +12,4 @@ else
 end  
 
 #@http_headers = {content_type: :json, accept: :json}
-@http_headers = {accept: :json, 'X-User-Api-Key' => 'df6e1c415dd74258137a54f45b7cc315', referer: 'http://localhost'}
+@http_headers = {accept: :json, 'X-User-Api-Key' => '2e71d090e75e1232c4414bbe96f08ee8'}

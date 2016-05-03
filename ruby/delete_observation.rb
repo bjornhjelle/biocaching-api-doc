@@ -12,14 +12,14 @@ load './params.rb'
 begin
   
   params = {user:{email:@username, password:@password}}
-  response = RestClient.post("http://#{@server}/users/sign_in.json", params)
+  response = RestClient.post("http://#{@server}/users/sign_in.json", params, @http_headers)
   token = JSON.parse(response)["authentication_token"]
   
   puts JSON.parse(response)
   
   @http_headers.merge!({'X-User-Email' => @username, 'X-User-Token' => token})
   
-  response = RestClient.delete "#{@server}/observations/2", @http_headers
+  response = RestClient.delete "#{@server}/observations/12", @http_headers
   
   puts response.code
   json = JSON.parse(response)
@@ -29,6 +29,7 @@ rescue RestClient::Unauthorized => e
   exit
 rescue  Exception => e
   puts e.message
-  puts e.class.name
+  puts e.response.code
+  pp e.response
   exit
 end

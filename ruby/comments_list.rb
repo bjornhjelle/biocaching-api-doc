@@ -13,28 +13,39 @@ require 'pp'
 load './params.rb'
 
 
-observation_params = {observation: {taxon_id: 7552, observed_at: Time.now.to_s, latitude: 65.123, longitude: 14.234, picture: File.new("gekko.jpg", 'rb')}, :multipart => true, :content_type => 'application/json'}
+comment_params = {comment: {text: 'dette er en kommentar'}}
 
 begin
   
   params = {user:{email:@username, password:@password}}
-  response = RestClient.post("http://#{@server}/users/sign_in.json", params)
+  response = RestClient.post("http://#{@server}/users/sign_in.json", params, @http_headers)
   token = JSON.parse(response)["authentication_token"]
   
   puts JSON.parse(response)
   
   @http_headers.merge!({'X-User-Email' => @username, 'X-User-Token' => token})
+  response = RestClient.get "http://#{@server}/observations?size=1", @http_headers
+
+  puts response.code
+  json = JSON.parse(response)
+  o_id = json["hits"][0]["_id"]
+ 
   
-  response = RestClient.post "http://#{@server}/api/observations", observation_params, @http_headers
+  
+  response = RestClient.get "http://#{@server}/observations/#{o_id}/comments",  @http_headers
   
   puts response.code
   json = JSON.parse(response)
-  puts JSON.pretty_generate(json)
+  puts JSON.pretty_generate(json)  
+  
 rescue RestClient::Unauthorized => e
   puts "unauthorized...."  
   exit
 rescue  Exception => e
+
   puts e.message
-  puts e.class.name
+  puts e.response
+
+  puts e.backtrace
   exit
 end

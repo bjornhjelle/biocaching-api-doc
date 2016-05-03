@@ -10,7 +10,7 @@ require 'pp'
 
 begin
   params = {user:{email:@username, password:@password}}
-  response = RestClient.post("http://#{@server}/users/sign_in.json", params)
+  response = RestClient.post("http://#{@server}/users/sign_in.json", params, @http_headers)
   token = JSON.parse(response)["authentication_token"]
   
   puts JSON.parse(response)
