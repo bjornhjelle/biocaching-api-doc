@@ -17,7 +17,7 @@ begin
 
   @http_headers.merge!({'X-User-Email' => @username, 'X-User-Token' => token})
 
-  response = RestClient.get "http://#{@server}/taxa/search.json?term=stein&collection_id=24&size=0", @http_headers
+  response = RestClient.get "http://#{@server}/taxa/search.json?term=stein&collection_id=27&size=0", @http_headers
 
   puts response.code
   json = JSON.parse(response)
