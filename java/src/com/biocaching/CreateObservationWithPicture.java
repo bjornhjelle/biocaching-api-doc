@@ -8,21 +8,11 @@ import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.entity.mime.content.ContentBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.*;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.entity.mime.content.StringBody;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.*;
 
@@ -36,14 +26,8 @@ public class CreateObservationWithPicture {
             System.exit(1);
         }
 
-        /*
-        String bcSigninURL = "http://localhost:3001/users/sign_in";
-        String bcObservationsURL = "http://localhost:3001/observations.json";
-        String username = "bjorn@biocaching.com";
-        String password = "XXX";*/
-
         String bcSigninURL = String.format("http://%s/users/sign_in", args[0]);
-        String bcObservationsURL = String.format("http://%s/api/observations.json", args[0]);
+        String bcObservationsURL = String.format("http://%s/observations", args[0]);
         String username = args[1];
         String password = args[2];
 
@@ -62,7 +46,9 @@ public class CreateObservationWithPicture {
             HttpPost request = new HttpPost(bcSigninURL);
             StringEntity params = new StringEntity(user.toString());
             request.addHeader("content-type", "application/json");
+            request.addHeader("X-User-Api-Key", "621f85bdc3482ec12991019729aa9315");
             request.addHeader("Accept", "application/json");
+            request.addHeader("Referer", "http://localhost");
             request.setEntity(params);
             CloseableHttpResponse response = httpClient.execute(request);
             if (response != null) {
@@ -91,16 +77,18 @@ public class CreateObservationWithPicture {
 
         try {
             HttpPost request = new HttpPost(bcObservationsURL);
-            request.addHeader("content-type", "application/json");
+            request.addHeader("content-type", "application/json; charset=UTF-8");
             request.addHeader("Accept", "application/json");
+            request.addHeader("Referer", "http://localhost");
+            //request.addHeader("X-User-Api-Key", "621f85bdc3482ec12991019729aa9315");
             request.addHeader("X-User-Email", username);
             request.addHeader("X-User-Token", token);
 
-            File file = new File("blåmeis.jpg");
+            File file = new File("greylag_3.JPG");
 
             MultipartEntityBuilder builder = MultipartEntityBuilder.create();
 
-            builder.addBinaryBody("observation[picture]", file, ContentType.create("image/jpg"), file.getName());
+            builder.addBinaryBody("observation[picture_attributes[picture]]", file, ContentType.create("image/jpg"), file.getName());
             //builder.addBinaryBody("observation[picture]", file);
             //builder.addPart("observation[picture]", new FileBody(new File("piggsvin.jpg")));
 
@@ -108,13 +96,15 @@ public class CreateObservationWithPicture {
             builder.addTextBody("observation[latitude]", "59.8");
             builder.addTextBody("observation[longitude]", "14.2");
             builder.addTextBody("observation[observed_at]", "2016-03-12 18:00:07 +0100");
-            builder.addTextBody("observation[comments]", "Created by Java program");
+            builder.addTextBody("observation[comments][]", "Created by Java program");
 
             HttpEntity multipart = builder.build();
             request.setEntity(multipart);
 
             HttpPost method = new HttpPost(bcObservationsURL);
             method.setEntity(multipart);
+            // for some reason this must be set after setting multipart:
+            method.addHeader("X-User-Api-Key", "621f85bdc3482ec12991019729aa9315");
 
             CloseableHttpResponse response = httpClient.execute(method);
 
