@@ -13,6 +13,10 @@ require 'pp'
 load './params.rb'
 
 
+# Denne må endres dersom det er bildet som skal endres: 
+# - picture_attributes: {primary: true, picture: File.new("greylag_goose.jpg", 'rb')}
+# - legge til id for bildet som skal endres
+
 observation_params = {observation: {taxon_id: 1373, observed_at: Time.now.to_s, latitude: 61.9, longitude: 12.1, picture: File.new("flaggermus.jpg", 'rb')}, :multipart => true, :content_type => 'application/json'}
 
 begin
