@@ -1,0 +1,15 @@
+repositories {
+    jcenter()
+}
+
+apply plugin: 'java'
+
+dependencies {
+    compile 'commons-codec:commons-codec:1.10'
+    compile 'commons-logging:commons-logging:1.2'
+    compile 'org.apache.httpcomponents:httpcore:4.4.1'
+    compile 'org.apache.httpcomponents:httpmime:4.4.1'
+    compile 'org.apache.httpcomponents:httpclient:4.4.1'
+    compile 'org.apache.httpcomponents:httpclient-cache:4.4.1'
+    compile 'org.json:json:20151123'
+}
