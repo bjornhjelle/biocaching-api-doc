@@ -35,6 +35,8 @@ public class CreateObservation {
             conn.setDoOutput(true);
             conn.setDoInput(true);
             conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+            conn.setRequestProperty("Referer", "http://localhost");
+            conn.setRequestProperty("X-User-Api-Key", "621f85bdc3482ec12991019729aa9315");
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Accept", "application/json");
 
@@ -84,6 +86,8 @@ public class CreateObservation {
             conn.setRequestProperty("X-User-Email", username);
             conn.setRequestProperty("X-User-Token", token);
             conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+            conn.setRequestProperty("Referer", "http://localhost");
+            conn.setRequestProperty("X-User-Api-Key", "621f85bdc3482ec12991019729aa9315");
             conn.setRequestProperty("Accept", "application/json");
 
             JSONObject observationParams   = new JSONObject();
@@ -92,7 +96,7 @@ public class CreateObservation {
             observationParams.put("latitude", 59.9);
             observationParams.put("longitude", 14.34);
             observationParams.put("observed_at", "2016-03-12 18:00:07 +0100");
-            observationParams.put("comments", "new observation");
+            observationParams.put("comments[]", "new observation");
             observation.put("observation", observationParams);
 
             os = conn.getOutputStream();
