@@ -1,2 +1,6 @@
 java/.idea
 java/out
+
+# java-build
+build/
+.gradle/
