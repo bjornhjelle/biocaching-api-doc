@@ -13,3 +13,13 @@ dependencies {
     compile 'org.apache.httpcomponents:httpclient-cache:4.4.1'
     compile 'org.json:json:20151123'
 }
+
+apply plugin:'application'
+
+mainClassName = 'com.biocaching.CreateObservationWithPicture'
+
+run {    
+
+    /* Need to split the space-delimited value in the exec.args */
+    args System.getProperty("exec.args").split()    
+}
