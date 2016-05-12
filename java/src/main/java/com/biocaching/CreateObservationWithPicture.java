@@ -26,8 +26,8 @@ public class CreateObservationWithPicture {
             System.exit(1);
         }
 
-        String bcSigninURL = String.format("http://%s/users/sign_in", args[0]);
-        String bcObservationsURL = String.format("http://%s/observations", args[0]);
+        String bcSigninURL = String.format("%s/users/sign_in", args[0]);
+        String bcObservationsURL = String.format("%s/observations", args[0]);
         String username = args[1];
         String password = args[2];
 
