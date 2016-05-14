@@ -6,19 +6,7 @@
 require 'rest-client'
 require 'pp'
 
-if ARGV.size < 3
-  puts "usage:"
-  puts "  ruby <script>.rb <APIHOST> <username> <password>"
-  puts "  for example: ruby list_observations.rb api.biocaching.com:82 bjorn@biocaching.com password"
-  puts 
-  exit 1
-else
-  @server   = ARGV[0]
-  @username = ARGV[1]
-  @password = ARGV[2]
-end  
-
-@http_headers = {accept: :json, 'X-User-Api-Key' => '621f85bdc3482ec12991019729aa9315', referer: 'http://localhost'}
+load './set_params.rb'
 
 observation_params = {
    observation: { 
@@ -33,15 +21,17 @@ observation_params = {
      coordinate_uncertainty_in_meters: 30, 
      individual_count: 5, 
      sex: "3 males, 2 females", 
-     life_stage: "4 adults, 1 juvenile"
+     comment: "dette er en kommentar...",
+     life_stage: "4 adults, 1 juvenile",
+     tag_list: "tromsø bioblitzmai2015",
+     add_tags_from_settings: false
      }, 
    multipart: true, 
    content_type: 'application/json'}
 
 begin
   
-  params = {user:{email:@username, password:@password}}
-  response = RestClient.post("http://#{@server}/users/sign_in.json", params, @http_headers)
+  response = RestClient.post("#{@server}/users/sign_in.json", @login_params, @http_headers)
   token = JSON.parse(response)["authentication_token"]
   
   json = JSON.parse(response)
@@ -49,7 +39,7 @@ begin
   
   @http_headers.merge!({'X-User-Email' => @username, 'X-User-Token' => token})
   
-  response = RestClient.post "http://#{@server}/observations", observation_params, @http_headers
+  response = RestClient.post "#{@server}/observations", observation_params, @http_headers
   
   json = JSON.parse(response)
   puts JSON.pretty_generate(json)
