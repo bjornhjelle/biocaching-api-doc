@@ -23,7 +23,7 @@ begin
   puts JSON.pretty_generate(JSON.parse(response))
   
   @http_headers.merge!({'X-User-Email' => @username, 'X-User-Token' => token})
-  response = RestClient.post "#{@server}/tags/suggest?text=#{text}", nil, @http_headers
+  response = RestClient.get "#{@server}/tags/suggest?text=#{text}", @http_headers
 
   puts response.code
   puts JSON.pretty_generate(JSON.parse(response))

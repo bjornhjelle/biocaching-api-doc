@@ -13,7 +13,7 @@ require 'pp'
 load './params.rb'
 
 
-observation_params = {observation: {taxon_id: 61057, observed_at: Time.now.to_s, latitude: 65.123, longitude: 14.234, picture_attributes: {primary: true, picture: File.new("greylag_goose.jpg", 'rb')}, coordinate_uncertainty_in_meters: 30, individual_count: 5, sex: "3 males, 2 females", life_stage: "4 adults, 1 juvenile"}, :multipart => true, :content_type => 'application/json'}
+observation_params = {observation: {taxon_id: 61057, observed_at: Time.now.to_s, latitude: 65.123, longitude: 14.234, picture_attributes: {primary: true, picture: File.new("greylag_goose.jpg", 'rb')}, coordinate_uncertainty_in_meters: 30, individual_count: 5, sex: "3 males, 2 females", life_stage: "4 adults, 1 juvenile", tag_list: 'berlin blåbær', add_tags_from_settings: false}, :multipart => true, :content_type => 'application/json'}
 
 begin
   

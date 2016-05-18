@@ -14,6 +14,7 @@ observation_params = {
      observed_at: Time.now.to_s, 
      latitude: 65.123, 
      longitude: 14.234, 
+     is_public: false,
      picture_attributes: { 
        primary: true, 
        picture: File.new("greylag_goose.jpg", 'rb')

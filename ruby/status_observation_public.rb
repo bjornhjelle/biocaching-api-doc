@@ -17,32 +17,26 @@ begin
   
   response = RestClient.post("#{@server}/users/sign_in.json", @login_params, @http_headers)
   token = JSON.parse(response)["authentication_token"]
-  
+  user_id = JSON.parse(response)["id"]
   puts JSON.parse(response)
   
   @http_headers.merge!({'X-User-Email' => @username, 'X-User-Token' => token})
-  response = RestClient.get "#{@server}/observations?size=1", @http_headers
+  response = RestClient.get "#{@server}/observations?size=1&user_id=#{user_id}", @http_headers
 
   puts response.code
   json = JSON.parse(response)
   o_id = json["hits"][0]["_id"]
  
-  puts "will like Observation with id: %d" % o_id
+  puts "will set to status public for Observation with id: %d" % o_id
   
   @http_headers.merge!({'X-User-Email' => @username, 'X-User-Token' => token})
   
-  response = RestClient.post "#{@server}/observations/#{o_id}/like", nil, @http_headers
+  response = RestClient.post "#{@server}/observations/#{o_id}/public", nil, @http_headers
   
   puts response.code
   json = JSON.parse(response)
   puts JSON.pretty_generate(json)
   
-  
-  response = RestClient.get "#{@server}/observations/#{o_id}/likes",  @http_headers
-  
-  puts response.code
-  json = JSON.parse(response)
-  puts JSON.pretty_generate(json)  
   
 rescue RestClient::Unauthorized => e
   puts "unauthorized...."  
@@ -50,7 +44,6 @@ rescue RestClient::Unauthorized => e
 rescue  Exception => e
 
   puts e.message
-  puts e.response
 
   puts e.backtrace
   exit
