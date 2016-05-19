@@ -13,6 +13,7 @@ if ARGV[0] == 'server'
 else
   @server   = "http://localhost:3001"
   @username = "bjorn@biocaching.com"
+  #@username = "bjornhjelle@yahoo.com"
   @password = "test1234"
   @http_headers = {accept: :json, 'X-User-Api-Key' => '621f85bdc3482ec12991019729aa9315', referer: 'http://localhost'}
 end

@@ -9,14 +9,14 @@ require 'pp'
 
 load './set_params.rb'
 
-#if ARGV.size < 2
-#  puts "usage:"
-#  puts "  ruby #{$0} server|localhost <tags>"
-#  puts 
-#  exit 1
-#else
-#  tags   = ARGV[1]
-#end 
+if ARGV.size < 2
+  puts "usage:"
+  puts "  ruby #{$0} server|localhost <tags>"
+  puts 
+  exit 1
+else
+  tags   = ARGV[1]
+end 
 
 
 begin
@@ -24,9 +24,8 @@ begin
   token = JSON.parse(response)["authentication_token"]
   puts JSON.parse(response)
   
-  #search_params= "size=5&from=0&user_id=1&taxon_id=61057&tags=#{tags}"
+  search_params= "size=5&from=0&user_id=1&taxon_id=61057&tags=#{tags}"
   #search_params= "latitude=60&longitude=11&distance=2000km&size=5&from=0&"
-  search_params= ""
   #search_params= "top_left=14.0,66.1&bottom_right=15.1,60.56&size=5&taxon_id=61057"
   @http_headers.merge!({'X-User-Email' => @username, 'X-User-Token' => token})
   response = RestClient.get "#{@server}/observations?all=true&#{search_params}", @http_headers
