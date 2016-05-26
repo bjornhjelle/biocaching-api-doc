@@ -7,22 +7,22 @@
 require 'rest-client'
 require 'pp'
 
-load './params.rb'
+load './set_params.rb'
 
 begin
-  params = {user:{email:@username, password:@password}}
-  response = RestClient.post("http://#{@server}/users/sign_in.json", params)
+  response = RestClient.post("#{@server}/users/sign_in.json", @login_params, @http_headers)
   token = JSON.parse(response)["authentication_token"]
   
   puts JSON.parse(response)
   parameters= "fields=all"
   #parameters= ""
   @http_headers.merge!({'X-User-Email' => @username, 'X-User-Token' => token})
-  response = RestClient.get "http://#{@server}/taxa/475?#{parameters}", @http_headers
+  response = RestClient.get "#{@server}/taxa/2248?#{parameters}", @http_headers
   
   puts response.code
   json = JSON.parse(response)
   puts JSON.pretty_generate(json)
+  
 rescue RestClient::Unauthorized => e
   puts "unauthorized, login failed."  
   
