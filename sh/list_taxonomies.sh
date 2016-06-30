@@ -1,4 +1,5 @@
 #!/bin/sh
 curl  -H 'Content-Type: application/json' -H 'Accept: application/json' \
-    -H 'X-User-Email: bjorn@biocaching.com' -H 'X-User-Token: zCC868dPzS2Gp1y-UE1M' \
+  -H 'X-User-Email: <EMAIL>' -H 'X-User-Token: <USER-TOKEN>' \
+  -H 'X-User-Api-Key: <KEY>' \
   -X GET "http://api.biocaching.com:82/api/taxonomies" 

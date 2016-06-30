@@ -1,4 +1,5 @@
 #!/bin/sh
 curl  -H 'Content-Type: application/json' -H 'Accept: application/json' \
-  -X POST "http://api.biocaching.com:82/users/sign_in" \
-  -d '{"user" : { "email" : "bjorn@biocaching.com", "password" : "test1234"}}' \
+  -H 'X-User-Api-Key: <KEY>' \
+  -X POST 'https://api.biocaching.com/users/sign_in' \
+  -d '{"user" : { "email" : "<EMAIL>", "password" : "<PASSWORD>"}}' \
