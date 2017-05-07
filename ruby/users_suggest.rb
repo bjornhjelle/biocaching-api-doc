@@ -17,13 +17,14 @@ else
 end 
 
 begin
-  params = {user:{email:@username, password:@password}}
-  response = RestClient.post("#{@server}/users/sign_in.json", params, @http_headers)
+  response = RestClient.post("#{@server}/users/sign_in.json", @login_params, @http_headers)
   token = JSON.parse(response)["authentication_token"]
-  puts JSON.pretty_generate(JSON.parse(response))
+  
+  json = JSON.parse(response)
+  puts JSON.pretty_generate(json)
   
   @http_headers.merge!({'X-User-Email' => @username, 'X-User-Token' => token})
-  response = RestClient.get "#{@server}/users/suggest?text=#{text}", @http_headers
+  response = RestClient.get "#{@server}/users/suggest?term=#{text}", @http_headers
 
   puts response.code
   puts JSON.pretty_generate(JSON.parse(response))

@@ -9,14 +9,14 @@ require 'pp'
 
 load './set_params.rb'
 
-#if ARGV.size < 2
-#  puts "usage:"
-#  puts "  ruby #{$0} server|localhost <tags>"
-#  puts 
-#  exit 1
-#else
-#  tags   = ARGV[1]
-#end 
+if ARGV.size < 2
+ puts "usage:"
+ puts "  ruby #{$0} server|localhost <count>"
+ puts
+ exit 1
+else
+ count  = ARGV[1]
+end
 
 
 begin
@@ -29,7 +29,7 @@ begin
   search_params= ""
   #search_params= "top_left=14.0,66.1&bottom_right=15.1,60.56&size=5&taxon_id=61057"
   @http_headers.merge!({'X-User-Email' => @username, 'X-User-Token' => token})
-  response = RestClient.get "#{@server}/observations?public_ony=true&size=10", @http_headers
+  response = RestClient.get "#{@server}/observations/scoreboard?count=#{count}", @http_headers
 
   puts response.code
   puts JSON.pretty_generate(JSON.parse(response))

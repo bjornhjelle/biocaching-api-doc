@@ -10,11 +10,11 @@ load './set_params.rb'
 
 observation_params = {
    observation: { 
-     taxon_id: 61057, 
+    # taxon_id: 61057, 
      observed_at: Time.now.to_s, 
      latitude: 65.123, 
      longitude: 14.234, 
-     is_public: false,
+     is_public: true,
      picture_attributes: { 
        primary: true, 
        picture: File.new("greylag_goose.jpg", 'rb')
@@ -24,8 +24,7 @@ observation_params = {
      sex: "3 males, 2 females", 
      comment: "dette er en kommentar...",
      life_stage: "4 adults, 1 juvenile",
-     tag_list: "tromsø bioblitzmai2015",
-     add_tags_from_settings: false
+     tag_list: "tromsø bioblitzmai2015"
      }, 
    multipart: true, 
    content_type: 'application/json'}

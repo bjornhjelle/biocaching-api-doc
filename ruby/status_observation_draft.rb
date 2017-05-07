@@ -12,6 +12,14 @@ require 'pp'
 
 load './set_params.rb'
 
+if ARGV.size < 2
+  puts "usage:"
+  puts "  ruby #{$0} server|localhost <suggest term>"
+  puts 
+  exit 1
+else
+  text   = ARGV[1]
+end 
 
 begin
   
@@ -20,19 +28,12 @@ begin
   user_id = JSON.parse(response)["id"]
   
   puts JSON.parse(response)
-  
-  @http_headers.merge!({'X-User-Email' => @username, 'X-User-Token' => token})
-  response = RestClient.get "#{@server}/observations?size=1&user_id=#{user_id}", @http_headers
-
-  puts response.code
-  json = JSON.parse(response)
-  o_id = json["hits"][0]["_id"]
  
-  puts "will set to status draft for Observation with id: %d" % o_id
+  puts "will set to status draft for Observation with id: %d" % text
   
   @http_headers.merge!({'X-User-Email' => @username, 'X-User-Token' => token})
   
-  response = RestClient.post "#{@server}/observations/#{o_id}/draft", nil, @http_headers
+  response = RestClient.post "#{@server}/observations/#{text}/draft", nil, @http_headers
   
   puts response.code
   json = JSON.parse(response)

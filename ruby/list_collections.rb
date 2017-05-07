@@ -7,16 +7,24 @@
 require 'rest-client'
 require 'pp'
 
-load './params.rb'
+load './set_params.rb'
+
+if ARGV.size > 1
+  id = ARGV[1]
+end 
+
+
 
 begin
-  params = {user:{email:@username, password:@password}}
-  response = RestClient.post("http://#{@server}/users/sign_in.json", params, @http_headers)
+  response = RestClient.post(@sign_in_url, @login_params, @http_headers)
   token = JSON.parse(response)["authentication_token"]
+  #puts JSON.parse(response)
+    
+  params = id.nil? ? "" : ("/" + id)
   
-  puts JSON.parse(response)
-  @http_headers.merge!({'X-User-Email' => @username, 'X-User-Token' => token})
-  response = RestClient.get "http://#{@server}/collections", @http_headers
+  @http_headers.merge!({'X-User-Email' => @username, 'X-User-Token' => token})  
+  
+  response = RestClient.get "#{@server}/collections" + params, @http_headers
   
   puts response.code
   json = JSON.parse(response)

@@ -9,19 +9,18 @@ load './set_params.rb'
 require 'pp'
 
 begin
-  response = RestClient.post("#{@server}/users/sign_in.json", @login_params, @http_headers)
+  
+  # NB! denne fungerer ikke - vi bør ikke bruke Devise til dette
+  
+  @user_params = {user:{email:"bjorn@biocaching.com"}}
+  response = RestClient.post("#{@server}/users/password.json", @user_params, @http_headers)
   token = JSON.parse(response)["authentication_token"]
   
-  puts JSON.parse(response)
-
-  @http_headers.merge!({'X-User-Email' => @username, 'X-User-Token' => token})
-
-  response = RestClient.get "#{@server}/languages?language_iso=nob", @http_headers
-
-  puts response.code
   json = JSON.parse(response)
   puts JSON.pretty_generate(json)
   
+  
+
   
 rescue RestClient::Unauthorized => e
   puts "unauthorized, login failed."  

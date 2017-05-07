@@ -10,29 +10,28 @@ require 'rest-client'
 require 'pp'
 
 
-load './params.rb'
+#load './params.rb'
 
-
-comment_params = {comment: {text: 'dette er en kommentar'}}
+load './set_params.rb'
 
 begin
   
-  params = {user:{email:@username, password:@password}}
-  response = RestClient.post("http://#{@server}/users/sign_in.json", params, @http_headers)
+  response = RestClient.post(@sign_in_url, @login_params, @http_headers)
   token = JSON.parse(response)["authentication_token"]
   
   puts JSON.parse(response)
   
   @http_headers.merge!({'X-User-Email' => @username, 'X-User-Token' => token})
-  response = RestClient.get "http://#{@server}/observations?size=1", @http_headers
+  response = RestClient.get "#{@server}/observations?size=1", @http_headers
 
   puts response.code
   json = JSON.parse(response)
   o_id = json["hits"][0]["_id"]
  
   
+  puts "observation_id: " + o_id
   
-  response = RestClient.get "http://#{@server}/observations/#{o_id}/comments",  @http_headers
+  response = RestClient.get "#{@server}/observations/#{o_id}/comments",  @http_headers
   
   puts response.code
   json = JSON.parse(response)

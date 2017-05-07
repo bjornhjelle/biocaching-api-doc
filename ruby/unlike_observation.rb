@@ -10,39 +10,48 @@ require 'rest-client'
 require 'pp'
 
 
-load './params.rb'
+load './set_params.rb'
 
+if ARGV.size < 2
+  puts "usage:"
+  puts "  ruby #{$0} server|localhost <observation id>"
+  puts 
+  exit 1
+else
+  text   = ARGV[1]
+end 
 
-observation_params = {observation: {taxon_id: 61057, observed_at: Time.now.to_s, latitude: 65.123, longitude: 14.234, picture: File.new("greylag_goose.jpg", 'rb'), coordinate_uncertainty_in_meters: 30, individual_count: 5, sex: "3 males, 2 females", life_stage: "4 adults, 1 juvenile"}, :multipart => true, :content_type => 'application/json'}
 
 begin
   
-  params = {user:{email:@username, password:@password}}
-  response = RestClient.post("http://#{@server}/users/sign_in.json", params, @http_headers)
+  response = RestClient.post("#{@server}/users/sign_in.json", @login_params, @http_headers)
   token = JSON.parse(response)["authentication_token"]
   
   puts JSON.parse(response)
   
+  # @http_headers.merge!({'X-User-Email' => @username, 'X-User-Token' => token})
+  # response = RestClient.get "#{@server}/observations?size=1", @http_headers
+  #
+  # puts response.code
+  # json = JSON.parse(response)
+  # o_id = json["hits"][0]["_id"]
+ 
+  puts "will unlike Observation with id: %d" % text
+  
   @http_headers.merge!({'X-User-Email' => @username, 'X-User-Token' => token})
-  response = RestClient.get "http://#{@server}/observations?size=1", @http_headers
-
-  puts response.code
-  json = JSON.parse(response)
-  o_id = json["hits"][0]["_id"]
-   
-  response = RestClient.post "http://#{@server}/observations/#{o_id}/unlike", nil, @http_headers
   
-  puts response.code
-  json = JSON.parse(response)
-  puts JSON.pretty_generate(json)
-  
-  response = RestClient.get "http://#{@server}/observations/#{o_id}/likes",  @http_headers
+  response = RestClient.post "#{@server}/observations/#{text}/unlike", nil, @http_headers
   
   puts response.code
   json = JSON.parse(response)
   puts JSON.pretty_generate(json)
   
   
+  response = RestClient.get "#{@server}/observations/#{text}/likes",  @http_headers
+  
+  puts response.code
+  json = JSON.parse(response)
+  puts JSON.pretty_generate(json)  
   
 rescue RestClient::Unauthorized => e
   puts "unauthorized...."  
@@ -50,7 +59,7 @@ rescue RestClient::Unauthorized => e
 rescue  Exception => e
 
   puts e.message
-  puts e.response if e.respond_to? response
+  puts e.response
 
   puts e.backtrace
   exit

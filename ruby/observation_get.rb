@@ -12,15 +12,6 @@ require 'pp'
 
 load './set_params.rb'
 
-if ARGV.size < 2
-  puts "usage:"
-  puts "  ruby #{$0} server|localhost <observation id>"
-  puts 
-  exit 1
-else
-  text   = ARGV[1]
-end 
-
 
 begin
   
@@ -28,12 +19,17 @@ begin
   token = JSON.parse(response)["authentication_token"]
   user_id = JSON.parse(response)["id"]
   puts JSON.parse(response)
- 
-  puts "will set to status public for Observation with id: %d" % text
   
   @http_headers.merge!({'X-User-Email' => @username, 'X-User-Token' => token})
+  response = RestClient.get "#{@server}/observations?size=1&user_id=#{user_id}", @http_headers
+
+  puts response.code
+  json = JSON.parse(response)
+  o_id = json["hits"][0]["_id"]
+ 
+  @http_headers.merge!({'X-User-Email' => @username, 'X-User-Token' => token})
   
-  response = RestClient.post "#{@server}/observations/#{text}/public", nil, @http_headers
+  response = RestClient.get "#{@server}/observations/#{o_id}", @http_headers
   
   puts response.code
   json = JSON.parse(response)

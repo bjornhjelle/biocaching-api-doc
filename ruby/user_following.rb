@@ -9,7 +9,7 @@ load './set_params.rb'
 
 if ARGV.size < 2
   puts "usage:"
-  puts "  ruby #{$0} server|localhost <id of user to follow>"
+  puts "  ruby #{$0} server|localhost <id of user>"
   puts 
   exit 1
 else

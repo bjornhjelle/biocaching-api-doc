@@ -4,20 +4,19 @@
 #
 require 'rest-client'
 
-load './params.rb'
+load './set_params.rb'
 
 require 'pp'
 
 begin
-  params = {user:{email:@username, password:@password}}
-  response = RestClient.post("http://#{@server}/users/sign_in.json", params, @http_headers)
+  response = RestClient.post("#{@server}/users/sign_in.json", @login_params, @http_headers)
   token = JSON.parse(response)["authentication_token"]
   
   puts JSON.parse(response)
 
   @http_headers.merge!({'X-User-Email' => @username, 'X-User-Token' => token})
 
-  response = RestClient.get "http://#{@server}/regions?language_iso=non", @http_headers
+  response = RestClient.get "#{@server}/regions?language_iso=nob", @http_headers
 
   puts response.code
   json = JSON.parse(response)
